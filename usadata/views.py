@@ -6,6 +6,7 @@ from rest_framework import status
 from usadata import serializers
 from usadata.models import State, Person
 from usadata.serializers import StateSerializer, PersonSerializer
+from rest_framework.pagination import PageNumberPagination
 
 class StateList(APIView):
     def get(self, request, *args, **kwargs):
@@ -57,15 +58,16 @@ class StateDetail(APIView):
         return Response({'status': 'success', 'data': 'State deleted successfully'}, status=status.HTTP_200_OK)
 
 
-class PersonList(APIView):
+class PersonList(APIView, PageNumberPagination):
     def get(self, request):
         people = Person.objects.all()
-        serializer = PersonSerializer(people, many=True)
-        return Response({
+        results = self.paginate_queryset(people, request, view=self)
+        serializer = PersonSerializer(results, many=True)
+        
+        return self.get_paginated_response({
             'message': 'People retrieved successfully',
             'people': serializer.data
-        }, status=status.HTTP_200_OK)
-
+        })
     def post(self, request):
         serializer = PersonSerializer(data=request.data)
         if serializer.is_valid():
