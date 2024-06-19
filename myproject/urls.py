@@ -27,4 +27,5 @@ urlpatterns = [
     path('', include('myapp.urls')),
     path('students/', include('students.urls')),
     path('usadata/', include('usadata.urls')),
+    path('mpesa/', include('mpesa_stk.urls')),
 ]

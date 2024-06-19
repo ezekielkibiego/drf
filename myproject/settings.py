@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'debug_toolbar',
     'usadata',
+    'drf_spectacular',
+    'mpesa_stk',
+
 ]
 
 MIDDLEWARE = [
@@ -162,5 +165,18 @@ DEBUG_TOOLBAR_CONFIG = {
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10  # Number of items per page
+    'PAGE_SIZE': 10, # Number of items per page
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+
 }
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'People API',
+    'DESCRIPTION': 'API documentation for the People app',
+    'VERSION': '1.0.0',
+}
+
+MPESA_CONSUMER_KEY = config('MPESA_CONSUMER_KEY')
+MPESA_CONSUMER_SECRET = config('MPESA_CONSUMER_SECRET')
+MPESA_SHORTCODE = config('MPESA_SHORTCODE')
+MPESA_PASSKEY =  config('MPESA_PASSKEY')

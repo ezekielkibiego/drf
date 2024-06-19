@@ -1,9 +1,13 @@
+# states/urls.py
 from django.urls import path
-from usadata.views import *
+from rest_framework import routers
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
+from .views import PersonList, PersonDetail
 
 urlpatterns = [
-    path('api/states', StateList.as_view() , name='state-list'),
-    path('api/states/<int:id>/', StateDetail.as_view(), name='state-detail'),
-    path('api/people/', PersonList.as_view(), name='person-list'),
-    path('api/people/<int:pk>/', PersonDetail.as_view(), name='person-detail'),
+    path('people/', PersonList.as_view(), name='person-list'),
+    path('people/<int:pk>/', PersonDetail.as_view(), name='person-detail'),
+    path('schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ]
